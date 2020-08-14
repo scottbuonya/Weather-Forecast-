@@ -138,19 +138,18 @@ $(document).ready(function() {
                 }
             }
 
-            //Get the 3pm element every day for the next 5 days, populate data, and build each of the 5 cards.  The api populates
-            //data for every 3 hours of a day, so the "i" incrementing by i is 24 hours from the previous i.
+            //Get the 3pm element every day for the next 5 days, populate data, and build each of the 5 cards.
             for (i = element3PMFirstAppears; i < 40; i+=8) {
                 var sectionNbr = "#section" + i;
                 var newSection = $("<section>",{class: "col-lg-2", id: sectionNbr});           
                 var newCard = $("<div>").addClass("card bg-primary text-white");            
                 var newDiv = $("<div>").addClass("card-body");
                 var newH5 = $("<h5>",{class: "card-title", text: moment(fiveDaysWeather.list[i].dt_txt).format('MM/DD/YYYY')});
-                //get the weather icon and include it in the card
+                
                 var icon =fiveDaysWeather.list[i].weather[0].icon;
                 var iconURL = "https://openweathermap.org/img/wn/" + icon + ".png"
                 var newI = $("<img>").attr("src", iconURL);  
-                //get temp and humidity too
+                
                 var tempFromKelvin = (fiveDaysWeather.list[i].main.temp - 273.15) * 1.80 + 32
                 var newP1 = $("<p>",{class: "card-text", text: "Temp: " + tempFromKelvin.toFixed(1) + " °F"}); //  alt 0 1 7 6
                 var newP2 = $("<p>",{class: "card-text", text: "Humidity: " + fiveDaysWeather.list[i].main.humidity +"%"});
@@ -164,9 +163,76 @@ $(document).ready(function() {
 
 
     }
-});   
+
+    // saves city last searched
+    function initDoc() {
+        retrievePreviouslySearchedList();
+        inputCity = retrieveLastCitySearched();
+        if (inputCity != null) {
+            retrieveWeather(false);
+        }
+    };
+
+   
+    function getInputCity(){
+        inputCity =  $("#search-input").val().trim();
+        if (inputCity == "") {
+            alert("Please enter a city to search for.")
+            return false;
+        }
+        return true;
+        
+    }
+
+   
+    function saveLastCitySearched(cityName){
+        localStorage.setItem("lastCitySearched", cityName);
+    };
+
+    
+    function retrieveLastCitySearched(){
+        return localStorage.getItem("lastCitySearched");
+    };    
+   
+
+    //save the list of cities as arrays
+    function saveCityList() {        
+
+        if (getInputCity()) {
+            var cities = JSON.parse(window.localStorage.getItem('citiesPreviouslySearched'));
+            if (cities === null) {
+                cities = [];
+            }
+            
+            if (cities.indexOf(inputCity) == -1) {
+                cities.push(inputCity);
+                localStorage.setItem("citiesPreviouslySearched", JSON.stringify(cities));
+                retrievePreviouslySearchedList();
+            };         
+         
+            saveLastCitySearched(inputCity);
+            return true;
+        };        
+        return false;
+
+    }
+
+      
+    function retrievePreviouslySearchedList(){
+        $("tbody").empty();
+        var cities = JSON.parse(window.localStorage.getItem('citiesPreviouslySearched'));
+        if (cities != null) {
+            for (i = 0; i < cities.length; i++) {
+                var newTR = $("<tr>");
+                var citySearched = $("<td>").text(cities[i]);
+                newTR.append(citySearched)      
+                $("tbody").append(newTR);                
+            }
+        } 
+    }
 
 
+});
 
 
 

@@ -46,5 +46,33 @@ tr {
     margin-top: 10px;
 }
 
-
+.lowuv {
+    background: green;
+    color: white;
+    padding: 2px 8px;
+  }
+  
+  .mediumuv {
+    background: rgb(245, 199, 85);
+    color: white;
+    padding: 2px 8px;
+  }
+  
+  .highuv {
+    background: rgb(204, 158, 42);
+    color: white;
+    padding: 2px 8px;
+  }
+  
+  .veryhighuv {
+    background: red;
+    color: white;
+    padding: 2px 8px;
+  }
+  
+  .extremelyhighuv {
+    background: rgb(99, 17, 99);
+    color: white;
+    padding: 2px 8px;
+  }
 
