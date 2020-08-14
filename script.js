@@ -14,14 +14,20 @@ $(document).ready(function() {
             };
 
     });
-     //----or----
-    //if the enter key is pressed, then fire the search btn click event.
+     
     $(document).keyup(function (e) {
         if (e.keyCode == 13) {
             $("#search-btn").click();
         }
     });
 
+    
+    $(document).on("click","td", function(e){
+        inputCity = e.target.innerHTML;
+        saveLastCitySearched(inputCity);
+        retrieveWeather(false);
+    });
+    //*****END CLICKING EVENTS *****/
 
 
 
