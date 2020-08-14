@@ -1,5 +1,5 @@
 header {
-    background-color: black;
+    background-color:grey;
     color: white;
     text-align: center;
     height: 75px;
@@ -17,4 +17,31 @@ h4 {
     margin-top: 10px;
     margin-bottom:10px;
     font-weight: bold;
+}
+
+.searchdiv {
+    background: whitesmoke;
+}
+
+.searchCitiesTable {
+    width: 90%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 15px;
+    background: white;
+}
+
+td {
+    padding: 10px;
+}
+
+tr {
+    border-style: solid;
+    border-color: lightgray;
+    border-width: thin;
+}
+
+#todays-weather {
+    width: 80%;
+    margin-top: 10px;
 }
