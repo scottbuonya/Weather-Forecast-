@@ -138,6 +138,33 @@ $(document).ready(function() {
                 }
             }
 
+            //Get the 3pm element every day for the next 5 days, populate data, and build each of the 5 cards.  The api populates
+            //data for every 3 hours of a day, so the "i" incrementing by i is 24 hours from the previous i.
+            for (i = element3PMFirstAppears; i < 40; i+=8) {
+                var sectionNbr = "#section" + i;
+                var newSection = $("<section>",{class: "col-lg-2", id: sectionNbr});           
+                var newCard = $("<div>").addClass("card bg-primary text-white");            
+                var newDiv = $("<div>").addClass("card-body");
+                var newH5 = $("<h5>",{class: "card-title", text: moment(fiveDaysWeather.list[i].dt_txt).format('MM/DD/YYYY')});
+                //get the weather icon and include it in the card
+                var icon =fiveDaysWeather.list[i].weather[0].icon;
+                var iconURL = "https://openweathermap.org/img/wn/" + icon + ".png"
+                var newI = $("<img>").attr("src", iconURL);  
+                //get temp and humidity too
+                var tempFromKelvin = (fiveDaysWeather.list[i].main.temp - 273.15) * 1.80 + 32
+                var newP1 = $("<p>",{class: "card-text", text: "Temp: " + tempFromKelvin.toFixed(1) + " °F"}); //  alt 0 1 7 6
+                var newP2 = $("<p>",{class: "card-text", text: "Humidity: " + fiveDaysWeather.list[i].main.humidity +"%"});
+                newDiv.append(newH5, newI, newP1, newP2);
+                $(newCard).append(newDiv);
+                $(newSection).append(newCard);
+                $("#fivedaysection").append(newSection);
+            }            
+
+        });
+
+
+    }
+});   
 
 
 
