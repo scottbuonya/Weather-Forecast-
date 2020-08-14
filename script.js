@@ -27,7 +27,16 @@ $(document).ready(function() {
         saveLastCitySearched(inputCity);
         retrieveWeather(false);
     });
-    //*****END CLICKING EVENTS *****/
+   
+    
+    function retrieveWeather(needCity){
+        if (needCity) {
+            getInputCity()
+        }
+        
+        buildTodaysWeather();
+        buildFiveDayForecast();
+    };
 
 
 
